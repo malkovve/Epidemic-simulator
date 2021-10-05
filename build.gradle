@@ -1,11 +1,15 @@
 plugins {
     id 'java-library'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
 version '1.0-SNAPSHOT'
 sourceCompatibility = 16
+targetCompatibility = 16
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 
 repositories {
@@ -26,4 +30,6 @@ test {
     useJUnitPlatform()
 }
 
-mainClassName = 'IDEMain'
+application {
+    mainClass = 'IDEMain'
+}
