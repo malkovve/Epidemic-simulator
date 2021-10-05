@@ -68,16 +68,30 @@
                         <content>
                           <AnchorPane>
                                  <children>
-                                    <TextField fx:id="meshSize" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="14.0" prefHeight="25.0" prefWidth="169.0" promptText="10x10" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
+                                    <Text layoutX="-4.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Начальные данные" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <font>
-                                          <Font name="Times New Roman Bold" size="14.0" />
+                                          <Font name="Times New Roman" size="20.0" />
                                        </font>
-                                    </TextField>
+                                    </Text>
                                     <Text layoutX="15.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер сетки" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="44.0">
                                        <font>
                                           <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
+                                    <TextField fx:id="meshSize" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="14.0" prefHeight="25.0" prefWidth="169.0" promptText="10x10" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <Text layoutX="27.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество человек" AnchorPane.leftAnchor="5.0">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="quantityPeople" alignment="CENTER_RIGHT" layoutX="108.0" layoutY="74.0" prefHeight="26.0" prefWidth="140.0" promptText="100" AnchorPane.rightAnchor="5.0">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font></TextField>
                                     <Text layoutX="6.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество больных" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="114.0">
                                        <font>
                                           <Font name="Times New Roman" size="16.0" />
@@ -89,22 +103,8 @@
                                        </font>
                                     </TextField>
                                     <Button layoutX="222.0" layoutY="141.0" mnemonicParsing="false" onAction="#acceptData" text="Принять" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="141.0" />
-                                    <Text layoutX="-4.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Начальные данные" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="20.0" />
-                                       </font>
-                                    </Text>
                                     <Button layoutX="161.0" layoutY="141.0" mnemonicParsing="false" onAction="#resetData" text="Сброс" AnchorPane.rightAnchor="80.5" />
                                     <Separator layoutX="9.0" layoutY="152.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0" />
-                                    <TextField fx:id="quantityPeople" alignment="CENTER_RIGHT" layoutX="108.0" layoutY="74.0" prefHeight="26.0" prefWidth="140.0" promptText="100" AnchorPane.rightAnchor="5.0">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="14.0" />
-                                       </font></TextField>
-                                    <Text layoutX="27.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество человек" AnchorPane.leftAnchor="5.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
                                     <Button layoutX="216.0" layoutY="491.0" mnemonicParsing="false" onAction="#start" text="Старт" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                     <Button layoutX="115.0" layoutY="492.0" mnemonicParsing="false" onAction="#stop" text="Стоп" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
                                  </children></AnchorPane>
