@@ -1,5 +1,6 @@
 package simulator.epidemic;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -7,6 +8,10 @@ import javafx.scene.layout.GridPane;
 import simulator.epidemic.objects.InputData;
 import simulator.epidemic.utils.Animation;
 import simulator.log.Logger;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SimulatorController {
 
@@ -21,6 +26,8 @@ public class SimulatorController {
     @FXML
     private GridPane gridPane;
 
+    private static volatile boolean isAnimation = false;
+    private ScheduledExecutorService scheduledExecutorService;
     private Animation animation;
 
     @FXML
@@ -52,17 +59,29 @@ public class SimulatorController {
 
     @FXML
     private void resetData(ActionEvent event) {
-
+        meshSize.setEditable(true);
+        quantityPeople.setEditable(true);
+        illPeople.setEditable(true);
     }
 
     @FXML
     private void start(ActionEvent event) {
-
+        if (!isAnimation) {
+            isAnimation = true;
+            scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+            Runnable runnable = () -> Platform.runLater(() -> animation.animationAlg());
+            scheduledExecutorService.scheduleAtFixedRate(runnable, 0, 500, TimeUnit.MILLISECONDS);
+        }
     }
 
     @FXML
     public void stop(ActionEvent event) {
-
+        if (scheduledExecutorService != null) {
+            scheduledExecutorService.shutdown();
+        }
+        isAnimation = false;
+        quantityPeople.setEditable(true);
+        meshSize.setEditable(true);
     }
 
 }
