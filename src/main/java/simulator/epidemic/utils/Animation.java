@@ -92,22 +92,21 @@ public class Animation extends Query<GridPane> {
         int y = position.getCoordinateY();
 
         switch (i) {
-            case (1) -> newCoordinate = new Coordinate(Math.abs(x - 1), Math.abs(y - 1));
-            case (2) -> newCoordinate = new Coordinate(x, Math.abs(y - 1));
-            case (3) -> newCoordinate = new Coordinate(x + 1, Math.abs(y - 1));
+            case (1) -> newCoordinate = new Coordinate(Math.abs(x - 1), y + 1);
+            case (2) -> newCoordinate = new Coordinate(x, y + 1);
+            case (3) -> newCoordinate = new Coordinate(x + 1, y + 1);
             case (4) -> newCoordinate = new Coordinate(Math.abs(x - 1), y);
             case (5) -> newCoordinate = new Coordinate(x, y);
             case (6) -> newCoordinate = new Coordinate(x + 1, y);
-            case (7) -> newCoordinate = new Coordinate(Math.abs(x - 1), y + 1);
-            case (8) -> newCoordinate = new Coordinate(x, y + 1);
-            case (9) -> newCoordinate = new Coordinate(x + 1, y + 1);
+            case (7) -> newCoordinate = new Coordinate(Math.abs(x - 1), Math.abs(y - 1));
+            case (8) -> newCoordinate = new Coordinate(x, Math.abs(y - 1));
+            case (9) -> newCoordinate = new Coordinate(x + 1, Math.abs(y - 1));
         }
-        if (newCoordinate.getCoordinateX() > gridPane.getColumnCount() - 1 && newCoordinate.getCoordinateY() > gridPane.getRowCount() - 1) {
-            newCoordinate = new Coordinate(Math.abs(x - 1), Math.abs(y - 1));
-        } else if (newCoordinate.getCoordinateY() > gridPane.getRowCount() - 1) {
-            newCoordinate = new Coordinate(Math.abs(x - 1), Math.abs(y - 1));
-        } else if (newCoordinate.getCoordinateX() > gridPane.getColumnCount()) {
-            newCoordinate = new Coordinate(Math.abs(x - 1), Math.abs(y - 1));
+        if (newCoordinate.getCoordinateX() > gridPane.getColumnCount() - 1) {
+            newCoordinate.setCoordinateX(newCoordinate.getCoordinateX() - 1);
+        }
+        if (newCoordinate.getCoordinateY() > gridPane.getRowCount() - 1) {
+            newCoordinate.setCoordinateY(newCoordinate.getCoordinateY() - 1);
         }
         return newCoordinate;
     }
