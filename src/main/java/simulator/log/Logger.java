@@ -38,6 +38,14 @@ public class Logger {
         writeFile(stringBuilder.toString());
     }
 
+    public void timerInfo(String msg, long workTime) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(Instant.now()).append(" ").append(nameClass).append(" ")
+                .append("TimerINFO: ").append(msg).append(": ").append(workTime).append(System.lineSeparator());
+        //writeFile(stringBuilder.toString());
+        System.out.println(stringBuilder);
+    }
+
     private void exceptionDialog(String title, String message, String exception) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

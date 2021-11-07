@@ -2,7 +2,6 @@ package simulator.epidemic.utils;
 
 import javafx.scene.layout.GridPane;
 import simulator.epidemic.objects.*;
-import simulator.epidemic.querypool.Query;
 import simulator.epidemic.service.MeshService;
 import simulator.epidemic.service.PeopleService;
 import simulator.log.Logger;
@@ -10,7 +9,7 @@ import simulator.log.Logger;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Animation extends Query<GridPane> {
+public class Animation {
 
     private static final Logger logger = new Logger(Animation.class);
 
@@ -22,7 +21,6 @@ public class Animation extends Query<GridPane> {
         this.gridPane = gridPane;
     }
 
-    @Override
     public void prepare(InputData inputData) {
         MeshService meshService = new MeshService(gridPane);
         peopleService = new PeopleService(gridPane);
@@ -31,18 +29,27 @@ public class Animation extends Query<GridPane> {
         } else if (inputData.getQuantityAllPeople() <= inputData.getQuantityIllPeople()) {
             throw new NumberFormatException("the number of people is less than the number of patients");
         } else {
+            long startTime = System.currentTimeMillis();
             Mesh mesh = new Mesh(inputData.getMeshSizeX(), inputData.getMeshSizeY());
             meshService.createMesh(mesh.getSizeX(), mesh.getSizeY());
+            long endTime = System.currentTimeMillis();
+            logger.timerInfo("Create mesh: ", (endTime - startTime));
+            long startTime2 = System.currentTimeMillis();
             fullDataPeople = peopleService.prepare(inputData.getQuantityIllPeople(), inputData.getQuantityHealthyPeople());
+            long endTime2 = System.currentTimeMillis();
+            logger.timerInfo("Create people in mesh: ", (endTime2 - startTime2));
         }
     }
 
     public void animationAlg() {
+        long startTime = System.currentTimeMillis();
         gridPane.setGridLinesVisible(false);
         gridPane.getChildren().clear();
         gridPane.setGridLinesVisible(true);
         animationHealthyPeople();
         animationIllPeople();
+        long endTime = System.currentTimeMillis();
+        logger.timerInfo("Animation alg: ", (endTime - startTime));
     }
 
 
