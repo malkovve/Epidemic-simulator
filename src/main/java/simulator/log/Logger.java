@@ -36,6 +36,7 @@ public class Logger {
         stringBuilder.append(Instant.now()).append(" ").append(nameClass).append(" ")
                 .append("INFO: ").append(msg).append(System.lineSeparator());
         writeFile(stringBuilder.toString());
+        System.out.println(msg);
     }
 
     public void timerInfo(String msg, long workTime) {

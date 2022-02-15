@@ -3,7 +3,10 @@ package simulator.epidemic.objects;
 public enum PeopleState {
     HEALTHY("healthy"),
     VERY_SICK("very_sick"),
-    SICK("sick");
+    SUSCEPTIBLE("Здоров"),
+    EXPOSED(""),
+    INFECTIOUS(""),
+    RECOVERED("");
 
     private String state;
 

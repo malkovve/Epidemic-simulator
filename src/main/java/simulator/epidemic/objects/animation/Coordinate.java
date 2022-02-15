@@ -1,4 +1,4 @@
-package simulator.epidemic.objects;
+package simulator.epidemic.objects.animation;
 
 import java.util.Objects;
 

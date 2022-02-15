@@ -1,6 +1,8 @@
 package simulator.epidemic.objects;
 
 
+import simulator.epidemic.objects.animation.Coordinate;
+
 public class People {
 
     private String id;
