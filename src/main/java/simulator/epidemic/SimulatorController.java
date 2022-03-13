@@ -145,20 +145,6 @@ public class SimulatorController implements Initializable {
         if (!isAnimation && isAcceptData) {
             isAnimation = true;
             animation.start();
-
-            iter = 0;
-            Runnable runnable1 = new Runnable() {
-                @Override
-                public void run() {
-                    iter++;
-                    Platform.runLater(() -> animation.start());
-                    iteration.setText(String.valueOf(iter));
-                    System.out.println("_______________________________________________________________________________________");
-
-                }
-            };
-
-
         }
     }
 
