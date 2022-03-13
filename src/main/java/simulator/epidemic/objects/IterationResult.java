@@ -3,7 +3,7 @@ package simulator.epidemic.objects;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class ElementsGUI {
+public class IterationResult {
 
     private final GridPane gridPane; // сетка
 
@@ -11,7 +11,7 @@ public class ElementsGUI {
     private final TextField iterIll; // итерационные значения общего числа популяции
     private final TextField iterHealthy; // итерационные значения здоровых
 
-    public ElementsGUI(GridPane gridPane, TextField iterAll, TextField iterIll, TextField iterHealthy) {
+    public IterationResult(GridPane gridPane, TextField iterAll, TextField iterIll, TextField iterHealthy) {
         this.gridPane = gridPane;
         this.iterAll = iterAll;
         this.iterIll = iterIll;

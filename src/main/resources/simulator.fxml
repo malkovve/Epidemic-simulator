@@ -22,7 +22,7 @@
         <items>
           <AnchorPane>
                <children>
-                  <ScrollPane layoutX="277.0" layoutY="-24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane fx:id="scrollPane" layoutX="277.0" layoutY="-24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
                         <GridPane fx:id="gridPane">
                           <columnConstraints>
@@ -135,24 +135,30 @@
                                           <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
-                                    <ComboBox fx:id="speed" layoutX="160.0" layoutY="50.0" onAction="#selectSpeed" prefHeight="25.0" prefWidth="128.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
+                                    <ComboBox fx:id="speed" layoutX="160.0" layoutY="50.0" prefHeight="25.0" prefWidth="128.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
                                     <Text layoutX="5.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Отображение каждой n итерации" wrappingWidth="143.0703125">
                                        <font>
                                           <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
-                                    <TextField alignment="CENTER_RIGHT" layoutX="194.0" layoutY="99.0" prefHeight="25.0" prefWidth="98.0" text="5" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="100.0" />
+                                    <TextField alignment="CENTER_RIGHT" layoutX="156.0" layoutY="98.0" prefHeight="25.0" prefWidth="57.0" text="5" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="98.0" />
                                     <Text layoutX="2.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятности перехода состояний" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.topAnchor="200.0">
                                        <font>
                                           <Font name="Times New Roman" size="20.0" />
                                        </font>
                                     </Text>
-                                    <Text layoutX="2.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятность заражения" wrappingWidth="176.0703125" AnchorPane.leftAnchor="5.0">
+                                    <Text layoutX="5.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятность заражения при встрече" wrappingWidth="176.0703125" AnchorPane.leftAnchor="5.0">
                                        <font>
                                           <Font name="Times New Roman" size="16.0" />
                                        </font>
                                     </Text>
-                                    <TextField alignment="CENTER_RIGHT" layoutX="195.0" layoutY="249.0" prefHeight="25.0" prefWidth="98.0" AnchorPane.rightAnchor="5.0" />
+                                    <TextField alignment="CENTER_RIGHT" layoutX="186.0" layoutY="249.0" prefHeight="25.0" prefWidth="98.0" AnchorPane.rightAnchor="14.0" />
+                                    <ComboBox fx:id="calendarDate" layoutX="228.0" layoutY="98.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="5.0" />
+                                    <Text layoutX="145.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="n=" wrappingWidth="22.0703125">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                    </Text>
                                  </children></AnchorPane>
                         </content>
                       </Tab>

@@ -3,7 +3,6 @@ package simulator.epidemic;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,18 +11,21 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import simulator.epidemic.objects.ElementsGUI;
+import simulator.epidemic.animation.Animation;
+import simulator.epidemic.exception.SimulatorException;
+import simulator.epidemic.objects.People;
+import simulator.epidemic.objects.animation.Coordinate;
 import simulator.epidemic.objects.animation.InputData;
-import simulator.epidemic.utils.Animation;
+import simulator.epidemic.utils.DataGenerator;
 import simulator.epidemic.utils.ObjectValidator;
 import simulator.log.Logger;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 // Суть стенаний виртуальной машины заключается в том, что comboBox нулевой. А нулевой он потому что привязка полей
 // помеченных декоратором @FXML происходит уже после вызова конструктора, где-то в терньях фреймворка JavaFX.
@@ -34,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 // тогда как initialize() имеет к ним доступ.
 public class SimulatorController implements Initializable {
 
-    private static final Logger logger = new Logger(SimulatorController.class);
+    private static final Logger log = new Logger(SimulatorController.class);
 
     @FXML
     private TextField meshSize; // поле размерности сетки
@@ -57,28 +59,29 @@ public class SimulatorController implements Initializable {
     @FXML
     private CheckBox extraSettings; // флаг дополнительных настроек
     @FXML
+    private ComboBox<String> calendarDate; // флаг дополнительных настроек
+    @FXML
     private Tab settings; // окно дополнительных настроек
 
-
-    // todo: Реализовать свой класс ошибок для корректного вывода ошибки.
     private volatile boolean isAnimation = false;
     private volatile boolean isAcceptData = false;
-    private ScheduledExecutorService scheduledExecutorService;
+    public static InputData inputData;
     private Animation animation;
-    private ElementsGUI elementsGUI;
     private int iter = 0;
     private Long period;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        elementsGUI = new ElementsGUI(gridPane, iterAll, iterIll, iterHealthy);
-        elementsGUI.setBasicIterValue(); // устанавливаем значения по умолчанию
         settings.setDisable(true); // устанавливаем значения по умолчанию
         period = 2000L;
 
         ObservableList<String> list = FXCollections.observableArrayList("0.25", "0.5", "1", "1.5", "2", "3", "4", "5");
         speed.setItems(list); // устанавливаем выбранный элемент по умолчанию
         speed.getSelectionModel().select(4); // устанавливаем по умолчанию значение 2 секунды
+
+        ObservableList<String> listDate = FXCollections.observableArrayList("сек", "мин", "час", "день", "неделя", "месяц");
+        calendarDate.setItems(listDate); // устанавливаем выбранный элемент по умолчанию
+        calendarDate.getSelectionModel().select(1); // устанавливаем по умолчанию значение 2 секунды
 
 //        привязываем лямбда-функцию к реакции на изменение флага дополнительных настроек
         extraSettings.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -100,33 +103,34 @@ public class SimulatorController implements Initializable {
                 }
             }
         });
-        logger.info("Application Start");
+        log.info("Application Start");
     }
 
+    // добавить проверку isAcceptData
     @FXML
-    private void acceptData(ActionEvent event) {
+    private void acceptData(ActionEvent event) throws SimulatorException {
         try {
-            // Проверка валидности данных, если все нормально, то вернет объект InputData
-            InputData inputData = null;
-            try {
-                inputData = ObjectValidator.validateInputData(meshSize.getText(), quantityPeople.getText(), illPeople.getText());
-            } catch (Throwable e) {
-                System.out.println(e.getMessage());
-            }
-            logger.info("validate inputData is successful");
-
-            animation = new Animation(elementsGUI, inputData);
+//            Проверка валидности данных
+            inputData = ObjectValidator.validateInputData(meshSize.getText(), quantityPeople.getText(), illPeople.getText());
+//            Запускаем генерацию данных
+            List<People> peopleList = DataGenerator.generatePeople(inputData);
+            long l = System.currentTimeMillis();
+            long l1 = System.currentTimeMillis();
+            System.out.println("Grouping: " + (l1 - l));
+            animation = new Animation(gridPane, peopleList);
+//            Подготавливаем сетку
+            animation.prepareMesh(inputData.getMeshSizeX(), inputData.getMeshSizeY());
+//            Подготавливаем людей
+            animation.preparePeople();
 
             meshSize.setEditable(false);
             quantityPeople.setEditable(false);
             illPeople.setEditable(false);
             isAcceptData = true;
-
-            System.out.println("DataBase create successful");
         } catch (Throwable e) {
-            logger.error("incorrect input of initial data", e.getMessage());
+            log.error("incorrect input of initial data", e.getMessage());
+            throw e;
         }
-
     }
 
     @FXML
@@ -140,40 +144,34 @@ public class SimulatorController implements Initializable {
     private void start(ActionEvent event) {
         if (!isAnimation && isAcceptData) {
             isAnimation = true;
-            scheduledExecutorService = Executors.newScheduledThreadPool(4);
-            iter = 0;
-            Runnable runnable = () -> Platform.runLater(() -> {
-                iter++;
+            animation.start();
 
-                long startTime = System.currentTimeMillis();
-                CompletableFuture<Void> future = new CompletableFuture<>();
-                animation.start(future);
-                long endTime = System.currentTimeMillis();
-                logger.timerInfo("FullIter" + iter + ": ", (endTime - startTime));
-                iteration.setText(String.valueOf(iter));
-                System.out.println("_______________________________________________________________________________________");
-            });
-            scheduledExecutorService.scheduleAtFixedRate(runnable, 0, period, TimeUnit.MILLISECONDS);
+            iter = 0;
+            Runnable runnable1 = new Runnable() {
+                @Override
+                public void run() {
+                    iter++;
+                    Platform.runLater(() -> animation.start());
+                    iteration.setText(String.valueOf(iter));
+                    System.out.println("_______________________________________________________________________________________");
+
+                }
+            };
+
+
         }
     }
 
     @FXML
     public void stop(ActionEvent event) {
-        if (scheduledExecutorService != null) {
-            scheduledExecutorService.shutdown();
-        }
+        animation.stop();
         isAnimation = false;
     }
+
     @FXML
     public void onStageClose() {
-        if (scheduledExecutorService != null) {
-            scheduledExecutorService.shutdown();
-        }
-        logger.info("The program has been successfully closed.");
-    }
-
-    public void selectSpeed(ActionEvent actionEvent) {
-
+        animation.stop();
+        log.info("The program has been successfully closed.");
     }
 }
 
