@@ -1,7 +1,10 @@
-package simulator.epidemic.objects.animation;
+package simulator.epidemic.objects;
 
-public class InputData {
+import javafx.scene.control.TextField;
 
+public class SettingsAnimation {
+
+    private TextField probabilityInfection; // вероятность заражения
     private final int meshSizeX;
 
     private final int meshSizeY;
@@ -10,7 +13,7 @@ public class InputData {
 
     private final int illPeople;
 
-    public InputData(int meshSizeX, int meshSizeY, int allPeople, int illPeople) {
+    public SettingsAnimation(int meshSizeX, int meshSizeY, int allPeople, int illPeople) {
         this.meshSizeX = meshSizeX;
         this.meshSizeY = meshSizeY;
         this.allPeople = allPeople;

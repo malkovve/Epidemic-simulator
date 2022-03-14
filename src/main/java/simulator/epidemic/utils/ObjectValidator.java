@@ -2,14 +2,14 @@ package simulator.epidemic.utils;
 
 import simulator.epidemic.exception.SimulatorEpidemicExceptionBuilder;
 import simulator.epidemic.exception.SimulatorException;
-import simulator.epidemic.objects.animation.InputData;
+import simulator.epidemic.objects.SettingsAnimation;
 import simulator.log.Logger;
 
 public class ObjectValidator {
 
     private static final Logger log = new Logger(ObjectValidator.class);
 
-    public static InputData validateInputData(
+    public static SettingsAnimation validateInputData(
             String meshSize,
             String quantityPeople,
             String illPeople
@@ -38,7 +38,7 @@ public class ObjectValidator {
             }
 
             log.info("Validate input data complete SUCCESSFUL");
-            return new InputData(
+            return new SettingsAnimation(
                     meshSizeX,
                     meshSizeY,
                     quantityAllPeople,

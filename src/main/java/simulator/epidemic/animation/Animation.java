@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import simulator.epidemic.objects.IterationResult;
 import simulator.epidemic.objects.People;
+import simulator.epidemic.objects.PeopleState;
 import simulator.epidemic.objects.animation.Coordinate;
 import simulator.epidemic.utils.CalculationAlgorithm;
 import simulator.log.Logger;
@@ -24,15 +26,17 @@ public class Animation {
     public static final Image redPoint = new Image("images/redPoint.png");
 
     private final GridPane gridPane;
+    private final IterationResult iterationResult;
     private List<People> peopleList;
 
     private static final AtomicReference<CompletableFuture<Void>> FUTURE_REFERENCE = new AtomicReference<>(null);
 
     private ScheduledExecutorService scheduledExecutorService;
 
-    public Animation(GridPane gridPane, List<People> peopleList) {
+    public Animation(GridPane gridPane, IterationResult iterationResult, List<People> peopleList) {
         this.gridPane = gridPane;
         this.peopleList = peopleList;
+        this.iterationResult = iterationResult;
     }
 
     public void prepareMesh(int sizeX, int sizeY) {
@@ -67,6 +71,8 @@ public class Animation {
                 long l1 = System.currentTimeMillis();
                 System.out.println("ForkJoin " + (l1 - l));
                 FUTURE_REFERENCE.getAndSet(null).complete(null);
+                iterationResult.getIterAll().setText(String.valueOf(peopleList.size()));
+                iterationResult.getIterIll().setText(String.valueOf((int) peopleList.stream().filter(people -> people.getState().equals(PeopleState.VERY_SICK.getState())).count()));
             } catch (Throwable e) {
                 FUTURE_REFERENCE.getAndSet(null).completeExceptionally(e);
                 stop();

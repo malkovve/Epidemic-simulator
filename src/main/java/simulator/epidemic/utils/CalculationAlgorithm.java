@@ -99,10 +99,10 @@ public class CalculationAlgorithm extends RecursiveTask<List<People>> {
             case (8) -> newCoordinate = new Coordinate(x, Math.abs(y - 1));
             case (9) -> newCoordinate = new Coordinate(x + 1, Math.abs(y - 1));
         }
-        if (newCoordinate.getCoordinateX() > SimulatorController.inputData.getMeshSizeY() - 1) {
+        if (newCoordinate.getCoordinateX() > SimulatorController.settingsAnimation.getMeshSizeY() - 1) {
             newCoordinate.setCoordinateX(newCoordinate.getCoordinateX() - 1);
         }
-        if (newCoordinate.getCoordinateY() > SimulatorController.inputData.getMeshSizeY() - 1) {
+        if (newCoordinate.getCoordinateY() > SimulatorController.settingsAnimation.getMeshSizeY() - 1) {
             newCoordinate.setCoordinateY(newCoordinate.getCoordinateY() - 1);
         }
         return newCoordinate;

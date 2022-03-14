@@ -1,6 +1,5 @@
 package simulator.epidemic;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,19 +12,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import simulator.epidemic.animation.Animation;
 import simulator.epidemic.exception.SimulatorException;
+import simulator.epidemic.objects.IterationResult;
 import simulator.epidemic.objects.People;
-import simulator.epidemic.objects.animation.Coordinate;
-import simulator.epidemic.objects.animation.InputData;
+import simulator.epidemic.objects.SettingsAnimation;
 import simulator.epidemic.utils.DataGenerator;
 import simulator.epidemic.utils.ObjectValidator;
 import simulator.log.Logger;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 // Суть стенаний виртуальной машины заключается в том, что comboBox нулевой. А нулевой он потому что привязка полей
 // помеченных декоратором @FXML происходит уже после вызова конструктора, где-то в терньях фреймворка JavaFX.
@@ -57,6 +53,8 @@ public class SimulatorController implements Initializable {
     @FXML
     private TextField iteration; // итерационные значения
     @FXML
+    private TextField probabilityInfection; // вероятность заражения
+    @FXML
     private CheckBox extraSettings; // флаг дополнительных настроек
     @FXML
     private ComboBox<String> calendarDate; // флаг дополнительных настроек
@@ -65,13 +63,15 @@ public class SimulatorController implements Initializable {
 
     private volatile boolean isAnimation = false;
     private volatile boolean isAcceptData = false;
-    public static InputData inputData;
+    private IterationResult iterationResult;
+    public static SettingsAnimation settingsAnimation;
     private Animation animation;
-    private int iter = 0;
     private Long period;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        iterationResult = new IterationResult(gridPane, iterAll, iterIll, iterHealthy);
+
         settings.setDisable(true); // устанавливаем значения по умолчанию
         period = 2000L;
 
@@ -82,6 +82,11 @@ public class SimulatorController implements Initializable {
         ObservableList<String> listDate = FXCollections.observableArrayList("сек", "мин", "час", "день", "неделя", "месяц");
         calendarDate.setItems(listDate); // устанавливаем выбранный элемент по умолчанию
         calendarDate.getSelectionModel().select(1); // устанавливаем по умолчанию значение 2 секунды
+
+        probabilityInfection.setText("50%");
+        probabilityInfection.selectionProperty().addListener((observable, oldValue, newValue) -> {
+            //settingsAnimation.
+        });
 
 //        привязываем лямбда-функцию к реакции на изменение флага дополнительных настроек
         extraSettings.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -111,15 +116,15 @@ public class SimulatorController implements Initializable {
     private void acceptData(ActionEvent event) throws SimulatorException {
         try {
 //            Проверка валидности данных
-            inputData = ObjectValidator.validateInputData(meshSize.getText(), quantityPeople.getText(), illPeople.getText());
+            settingsAnimation = ObjectValidator.validateInputData(meshSize.getText(), quantityPeople.getText(), illPeople.getText());
 //            Запускаем генерацию данных
-            List<People> peopleList = DataGenerator.generatePeople(inputData);
+            List<People> peopleList = DataGenerator.generatePeople(settingsAnimation);
             long l = System.currentTimeMillis();
             long l1 = System.currentTimeMillis();
             System.out.println("Grouping: " + (l1 - l));
-            animation = new Animation(gridPane, peopleList);
+            animation = new Animation(gridPane, iterationResult, peopleList);
 //            Подготавливаем сетку
-            animation.prepareMesh(inputData.getMeshSizeX(), inputData.getMeshSizeY());
+            animation.prepareMesh(settingsAnimation.getMeshSizeX(), settingsAnimation.getMeshSizeY());
 //            Подготавливаем людей
             animation.preparePeople();
 
@@ -156,7 +161,9 @@ public class SimulatorController implements Initializable {
 
     @FXML
     public void onStageClose() {
-        animation.stop();
+        if (isAnimation) {
+            animation.stop();
+        }
         log.info("The program has been successfully closed.");
     }
 }

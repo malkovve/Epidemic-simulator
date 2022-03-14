@@ -3,8 +3,8 @@ package simulator.epidemic.utils;
 import simulator.epidemic.animation.Animation;
 import simulator.epidemic.objects.People;
 import simulator.epidemic.objects.PeopleState;
+import simulator.epidemic.objects.SettingsAnimation;
 import simulator.epidemic.objects.animation.Coordinate;
-import simulator.epidemic.objects.animation.InputData;
 import simulator.log.Logger;
 
 import java.util.ArrayList;
@@ -16,20 +16,20 @@ public class DataGenerator {
 
     private static final Logger log = new Logger(DataGenerator.class);
 
-    public static List<People> generatePeople(InputData inputData) {
+    public static List<People> generatePeople(SettingsAnimation settingsAnimation) {
         long startTime = System.currentTimeMillis();
         ArrayList<People> peopleList = new ArrayList<>();
-        for (int k = 0; k < inputData.getIllPeople(); k++) {
-            int i = ThreadLocalRandom.current().nextInt(inputData.getMeshSizeX());
-            int j = ThreadLocalRandom.current().nextInt(inputData.getMeshSizeY());
+        for (int k = 0; k < settingsAnimation.getIllPeople(); k++) {
+            int i = ThreadLocalRandom.current().nextInt(settingsAnimation.getMeshSizeX());
+            int j = ThreadLocalRandom.current().nextInt(settingsAnimation.getMeshSizeY());
             People people = new People(UUID.randomUUID().toString(), new Coordinate(i, j), PeopleState.VERY_SICK);
             people.setImageDisplay(Animation.redPoint);
             peopleList.add(people);
         }
 
-        for (int k = 0; k < inputData.getHealthyPeople(); k++) {
-            int i = ThreadLocalRandom.current().nextInt(inputData.getMeshSizeX());
-            int j = ThreadLocalRandom.current().nextInt(inputData.getMeshSizeY());
+        for (int k = 0; k < settingsAnimation.getHealthyPeople(); k++) {
+            int i = ThreadLocalRandom.current().nextInt(settingsAnimation.getMeshSizeX());
+            int j = ThreadLocalRandom.current().nextInt(settingsAnimation.getMeshSizeY());
             People people = new People(UUID.randomUUID().toString(), new Coordinate(i, j), PeopleState.HEALTHY);
             people.setImageDisplay(Animation.greenPoint);
             peopleList.add(people);
