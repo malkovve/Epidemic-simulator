@@ -22,8 +22,8 @@ public class Animation {
 
     private static final Logger log = new Logger(Animation.class);
 
-    public static final Image greenPoint = new Image("images/greenPoint.png");
-    public static final Image redPoint = new Image("images/redPoint.png");
+    public static final Image greenPoint = new Image("images/green.png");
+    public static final Image redPoint = new Image("images/red.png");
 
     private final GridPane gridPane;
     private final IterationResult iterationResult;
