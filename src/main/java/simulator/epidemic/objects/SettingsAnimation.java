@@ -28,7 +28,7 @@ public class SettingsAnimation {
         return meshSizeY;
     }
 
-    public int getQuantityAllPeople() {
+    public int getAllPeople() {
         return allPeople;
     }
 

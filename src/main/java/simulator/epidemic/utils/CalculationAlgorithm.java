@@ -21,7 +21,7 @@ public class CalculationAlgorithm extends RecursiveTask<List<People>> {
 
     @Override
     protected List<People> compute() {
-        if (groupingPeople.size() <= 10000) {
+        if (groupingPeople.keySet().size() <= 100000) {
             return peopleAlg(groupingPeople);
         }
         Map<Coordinate, List<People>> firstCoordinateListHashMap = new HashMap<>();
@@ -61,7 +61,7 @@ public class CalculationAlgorithm extends RecursiveTask<List<People>> {
                     }
                 } else if (stateGrouping.getKey().equals(PeopleState.HEALTHY.getState())) {
                     for(People people: stateGrouping.getValue()) {
-                        boolean isIll = ThreadLocalRandom.current().nextInt(100) > 50;
+                        boolean isIll = ThreadLocalRandom.current().nextLong(100) > 50;
                         if (isIll) {
                             people.setState(PeopleState.VERY_SICK);
                             people.setImageDisplay(Animation.redPoint);

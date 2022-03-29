@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
@@ -60,6 +61,8 @@ public class SimulatorController implements Initializable {
     private ComboBox<String> calendarDate; // флаг дополнительных настроек
     @FXML
     private Tab settings; // окно дополнительных настроек
+    @FXML
+    private LineChart<String, Float> lineChart;
 
     private volatile boolean isAnimation = false;
     private volatile boolean isAcceptData = false;
@@ -70,7 +73,7 @@ public class SimulatorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        iterationResult = new IterationResult(gridPane, iterAll, iterIll, iterHealthy);
+        iterationResult = new IterationResult(gridPane, iterAll, iterIll, iterHealthy, lineChart);
 
         settings.setDisable(true); // устанавливаем значения по умолчанию
         period = 2000L;

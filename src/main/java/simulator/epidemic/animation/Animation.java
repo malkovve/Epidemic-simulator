@@ -1,6 +1,7 @@
 package simulator.epidemic.animation;
 
 import javafx.application.Platform;
+import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -28,6 +29,8 @@ public class Animation {
     private final GridPane gridPane;
     private final IterationResult iterationResult;
     private List<People> peopleList;
+    private int iter;
+    private float count;
 
     private static final AtomicReference<CompletableFuture<Void>> FUTURE_REFERENCE = new AtomicReference<>(null);
 
@@ -37,6 +40,7 @@ public class Animation {
         this.gridPane = gridPane;
         this.peopleList = peopleList;
         this.iterationResult = iterationResult;
+        iter = 0;
     }
 
     public void prepareMesh(int sizeX, int sizeY) {
@@ -55,14 +59,21 @@ public class Animation {
             FUTURE_REFERENCE.get().whenComplete((aVoid, throwable) -> {
                 Platform.runLater(() -> {
                     if (throwable == null) {
+                        XYChart.Series<String, Float> series = new XYChart.Series<>();
+                        series.getData().add(new XYChart.Data<>(String.valueOf(iter), count));
+                        iterationResult.getLineChart().getData().add(series);
+
                         gridPane.setGridLinesVisible(false);
                         gridPane.getChildren().clear();
                         displayPeople(peopleList);
                         gridPane.setGridLinesVisible(true);
+                    } else {
+                        // обработчик ошибок
                     }
                 });
             });
             try {
+                iter++;
                 Map<Coordinate, List<People>> groupingPeople = peopleList.stream().collect(Collectors.groupingBy(People::getCoordinate));
                 long l = System.currentTimeMillis();
                 CalculationAlgorithm calculationAlgorithm = new CalculationAlgorithm(groupingPeople);
@@ -72,7 +83,11 @@ public class Animation {
                 System.out.println("ForkJoin " + (l1 - l));
                 FUTURE_REFERENCE.getAndSet(null).complete(null);
                 iterationResult.getIterAll().setText(String.valueOf(peopleList.size()));
-                iterationResult.getIterIll().setText(String.valueOf((int) peopleList.stream().filter(people -> people.getState().equals(PeopleState.VERY_SICK.getState())).count()));
+                count = peopleList.stream().filter(people -> people.getState().equals(PeopleState.VERY_SICK.getState())).count();
+                iterationResult.getIterIll().setText(String.valueOf((int) count));
+
+
+
             } catch (Throwable e) {
                 FUTURE_REFERENCE.getAndSet(null).completeExceptionally(e);
                 stop();
