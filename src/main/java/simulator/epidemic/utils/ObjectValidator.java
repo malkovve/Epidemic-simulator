@@ -1,15 +1,15 @@
 package simulator.epidemic.utils;
 
+import simulator.epidemic.SimulatorController;
 import simulator.epidemic.exception.SimulatorEpidemicExceptionBuilder;
 import simulator.epidemic.exception.SimulatorException;
-import simulator.epidemic.objects.SettingsAnimation;
 import simulator.log.Logger;
 
 public class ObjectValidator {
 
     private static final Logger log = new Logger(ObjectValidator.class);
 
-    public static SettingsAnimation validateInputData(
+    public static void validateInputData(
             String meshSize,
             String quantityPeople,
             String illPeople
@@ -37,13 +37,11 @@ public class ObjectValidator {
                 throw new NumberFormatException("the number of people is less than the number of patients");
             }
 
+            SimulatorController.applicationSettings.getMesh().setSizeX(meshSizeX);
+            SimulatorController.applicationSettings.getMesh().setSizeY(meshSizeY);
+            SimulatorController.applicationSettings.setAllPeople(quantityAllPeople);
+            SimulatorController.applicationSettings.setIllPeople(quantityIllPeople);
             log.info("Validate input data complete SUCCESSFUL");
-            return new SettingsAnimation(
-                    meshSizeX,
-                    meshSizeY,
-                    quantityAllPeople,
-                    quantityIllPeople
-            );
         } catch (Exception e) {
             throw SimulatorEpidemicExceptionBuilder.buildAttributeIncompatibleType(e);
         }

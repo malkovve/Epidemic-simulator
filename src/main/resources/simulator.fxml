@@ -20,175 +20,164 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="simulator.epidemic.SimulatorController">
-   <children>
-      <SplitPane dividerPositions="0.7" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane>
-               <children>
-                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <tabs>
-                      <Tab text="Клеточный автомат">
-                           <content>
-                              <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                                 <content>
-                                    <GridPane fx:id="gridPane">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                    </GridPane>
-                                 </content>
-                              </ScrollPane>
-                           </content>
-                        </Tab>
-                      <Tab fx:id="chart" text="График">
-                           <content>
-                              <LineChart fx:id="lineChart" title="График распространения">
-                                <xAxis>
-                                  <CategoryAxis side="BOTTOM" />
-                                </xAxis>
-                                <yAxis>
-                                  <NumberAxis side="LEFT" />
-                                </yAxis>
-                              </LineChart>
-                           </content>
-                        </Tab>
-                    </tabs>
-                  </TabPane>
-               </children></AnchorPane>
-          <AnchorPane maxWidth="296.0">
-               <children>
-                  <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <tabs>
-                      <Tab text="Управление">
-                        <content>
-                          <AnchorPane>
-                                 <children>
-                                    <Text layoutX="-4.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Начальные данные" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="20.0" />
-                                       </font>
-                                    </Text>
-                                    <Text layoutX="15.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер сетки" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="44.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="meshSize" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="14.0" prefHeight="25.0" prefWidth="169.0" promptText="10x10" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="14.0" />
-                                       </font>
-                                    </TextField>
-                                    <Text layoutX="27.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество человек" AnchorPane.leftAnchor="5.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="quantityPeople" alignment="CENTER_RIGHT" layoutX="108.0" layoutY="74.0" prefHeight="26.0" prefWidth="140.0" promptText="100" AnchorPane.rightAnchor="5.0">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="14.0" />
-                                       </font></TextField>
-                                    <Text layoutX="6.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество больных" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="114.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="illPeople" alignment="CENTER_RIGHT" layoutX="150.0" layoutY="110.0" prefHeight="26.0" prefWidth="134.0" promptText="10" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="110.0">
-                                       <font>
-                                          <Font name="Times New Roman Bold" size="14.0" />
-                                       </font>
-                                    </TextField>
-                                    <Button layoutX="222.0" layoutY="141.0" mnemonicParsing="false" onAction="#acceptData" text="Принять" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="141.0" />
-                                    <Button layoutX="161.0" layoutY="141.0" mnemonicParsing="false" onAction="#resetData" text="Сброс" AnchorPane.rightAnchor="80.5" />
-                                    <Separator layoutX="9.0" layoutY="152.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0" />
-                                    <Button layoutX="216.0" layoutY="491.0" mnemonicParsing="false" onAction="#start" text="Старт" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                    <Button layoutX="115.0" layoutY="492.0" mnemonicParsing="false" onAction="#stop" text="Стоп" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
-                                    <Text layoutX="112.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Результаты итераций" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="20.0" />
-                                       </font>
-                                    </Text>
-                                    <Text layoutX="2.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество больных" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="210.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="iterIll" disable="true" layoutX="147.0" layoutY="207.0" prefHeight="25.0" prefWidth="126.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="210.0" />
-                                    <Text layoutX="2.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество здоровых" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="240.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="iterHealthy" disable="true" layoutX="162.0" layoutY="247.0" prefHeight="25.0" prefWidth="126.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="240.0" />
-                                    <Text layoutX="12.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Численность" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="270.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="iterAll" disable="true" layoutX="167.0" layoutY="277.0" prefHeight="25.0" prefWidth="152.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="270.0" />
-                                    <Text layoutX="4.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дополнительные настройки" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="480.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <CheckBox fx:id="extraSettings" layoutX="224.0" layoutY="481.0" mnemonicParsing="false" text="вкл" />
-                                    <Text layoutX="5.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Итерация:" AnchorPane.topAnchor="300.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="iteration" alignment="CENTER_RIGHT" disable="true" layoutX="144.0" layoutY="299.0" prefHeight="25.0" prefWidth="190.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="300.0" />
-                                 </children></AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab fx:id="settings" text="Настройки">
-                        <content>
-                          <AnchorPane>
-                                 <children>
-                                    <Text layoutX="-4.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Настройки анимации" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="20.0" />
-                                       </font>
-                                    </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Скорость смены кадров (кадр/сек)" wrappingWidth="143.0703125" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="44.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <ComboBox fx:id="speed" layoutX="160.0" layoutY="50.0" prefHeight="25.0" prefWidth="128.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
-                                    <Text layoutX="5.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Отображение каждой n итерации" wrappingWidth="143.0703125">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField alignment="CENTER_RIGHT" layoutX="156.0" layoutY="98.0" prefHeight="25.0" prefWidth="57.0" text="5" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="98.0" />
-                                    <Text layoutX="2.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятности перехода состояний" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.topAnchor="200.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="20.0" />
-                                       </font>
-                                    </Text>
-                                    <Text layoutX="5.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятность заражения при встрече" wrappingWidth="176.0703125" AnchorPane.leftAnchor="5.0">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="probabilityInfection" alignment="CENTER_RIGHT" layoutX="186.0" layoutY="249.0" prefHeight="25.0" prefWidth="98.0" AnchorPane.rightAnchor="14.0" />
-                                    <ComboBox fx:id="calendarDate" layoutX="228.0" layoutY="98.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="5.0" />
-                                    <Text layoutX="145.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="n=" wrappingWidth="22.0703125">
-                                       <font>
-                                          <Font name="Times New Roman" size="16.0" />
-                                       </font>
-                                    </Text>
-                                 </children></AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
+    <SplitPane dividerPositions="0.7" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <Tab fx:id="tabAutomaton" text="Клеточный автомат">
+                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <GridPane fx:id="gridPane" styleClass="mygridStyle">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                        </GridPane>
+                    </ScrollPane>
+                </Tab>
+                <Tab fx:id="chart" text="График">
+                    <LineChart fx:id="lineChart" legendVisible="false" title="График распространения">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis side="LEFT" />
+                        </yAxis>
+                    </LineChart>
+                </Tab>
+            </TabPane>
+        </AnchorPane>
+        <AnchorPane maxWidth="296.0">
+            <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <Tab text="Управление">
+                    <AnchorPane>
+                        <Text layoutX="-4.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Начальные данные" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                            <font>
+                                <Font name="Times New Roman" size="20.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="15.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер сетки" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="44.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="meshSize" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="14.0" prefHeight="25.0" prefWidth="169.0" promptText="10x10" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font>
+                        </TextField>
+                        <Text layoutX="27.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество человек" AnchorPane.leftAnchor="5.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="quantityPeople" alignment="CENTER_RIGHT" layoutX="108.0" layoutY="74.0" prefHeight="26.0" prefWidth="140.0" promptText="100" AnchorPane.rightAnchor="5.0">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font>
+                        </TextField>
+                        <Text layoutX="6.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество больных" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="114.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="illPeople" alignment="CENTER_RIGHT" layoutX="150.0" layoutY="110.0" prefHeight="26.0" prefWidth="134.0" promptText="10" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="110.0">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font>
+                        </TextField>
+                        <Button layoutX="222.0" layoutY="141.0" mnemonicParsing="false" onAction="#acceptData" text="Принять" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="141.0" />
+                        <Button layoutX="161.0" layoutY="141.0" mnemonicParsing="false" onAction="#resetData" text="Сброс" AnchorPane.rightAnchor="80.5" />
+                        <Separator layoutX="9.0" layoutY="152.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0" />
+                        <Button layoutX="216.0" layoutY="491.0" mnemonicParsing="false" onAction="#start" text="Старт" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                        <Button layoutX="115.0" layoutY="492.0" mnemonicParsing="false" onAction="#stop" text="Стоп" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                        <Text layoutX="112.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Результаты итераций" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+                            <font>
+                                <Font name="Times New Roman" size="20.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="2.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество больных" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="210.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="iterIll" disable="true" layoutX="147.0" layoutY="207.0" prefHeight="25.0" prefWidth="126.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="210.0" />
+                        <Text layoutX="2.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество здоровых" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="240.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="iterHealthy" disable="true" layoutX="162.0" layoutY="247.0" prefHeight="25.0" prefWidth="126.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="240.0" />
+                        <Text layoutX="12.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Численность" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="270.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="iterAll" disable="true" layoutX="167.0" layoutY="277.0" prefHeight="25.0" prefWidth="152.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="270.0" />
+                        <Text layoutX="5.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Итерация:" AnchorPane.topAnchor="300.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="iteration" alignment="CENTER_RIGHT" disable="true" layoutX="144.0" layoutY="299.0" prefHeight="25.0" prefWidth="190.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="300.0" />
+                        <Text layoutX="4.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дополнительные настройки" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="480.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <CheckBox fx:id="extraSettings" layoutX="224.0" layoutY="481.0" mnemonicParsing="false" text="вкл" />
+                        <Text layoutX="5.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Клеточный автомат">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <CheckBox fx:id="cellularAutomaton" layoutX="224.0" layoutY="509.0" mnemonicParsing="false" text="вкл" />
+                    </AnchorPane>
+                </Tab>
+                <Tab fx:id="settings" text="Настройки">
+                    <AnchorPane>
+                        <Text layoutX="-4.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Настройки анимации" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                            <font>
+                                <Font name="Times New Roman" size="20.0" />
+                            </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Скорость смены кадров (кадр/сек)" wrappingWidth="143.0703125" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="44.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <ComboBox fx:id="speed" layoutX="160.0" layoutY="50.0" prefHeight="25.0" prefWidth="128.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
+                        <Text layoutX="5.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Отображение каждой n итерации" wrappingWidth="143.0703125">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="displayIter" alignment="CENTER_RIGHT" layoutX="156.0" layoutY="98.0" prefHeight="25.0" prefWidth="57.0" text="5" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="98.0" />
+                        <Text layoutX="2.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятности перехода состояний" textAlignment="CENTER" wrappingWidth="296.0" AnchorPane.topAnchor="200.0">
+                            <font>
+                                <Font name="Times New Roman" size="20.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="5.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вероятность заражения при встрече" wrappingWidth="176.0703125" AnchorPane.leftAnchor="5.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="probabilityInfection" alignment="CENTER_RIGHT" layoutX="186.0" layoutY="249.0" prefHeight="25.0" prefWidth="67.0" text="50" AnchorPane.rightAnchor="30.0" />
+                        <ComboBox fx:id="calendarDate" layoutX="228.0" layoutY="98.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="5.0" />
+                        <Text layoutX="145.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="n=" wrappingWidth="22.0703125">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="258.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="23.0703125" AnchorPane.rightAnchor="5.0">
+                            <font>
+                                <Font name="Times New Roman" size="16.0" />
+                            </font>
+                        </Text>
+                    </AnchorPane>
+                </Tab>
+            </TabPane>
+        </AnchorPane>
+    </SplitPane>
 </AnchorPane>

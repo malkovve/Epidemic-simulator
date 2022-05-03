@@ -59,17 +59,17 @@ public class CalculationAlgorithm extends RecursiveTask<List<People>> {
                         people.setCoordinate(moving(coordinate));
                         newPeopleList.add(people);
                     }
-                } else if (stateGrouping.getKey().equals(PeopleState.HEALTHY.getState())) {
+                } else if (stateGrouping.getKey().equals(PeopleState.SUSCEPTIBLE.getState())) {
                     for(People people: stateGrouping.getValue()) {
-                        boolean isIll = ThreadLocalRandom.current().nextLong(100) > 50;
+                        boolean isIll = ThreadLocalRandom.current().nextLong(1000) < 700;
                         if (isIll) {
-                            people.setState(PeopleState.VERY_SICK);
+                            people.setState(PeopleState.INFECTIOUS);
                             people.setImageDisplay(Animation.redPoint);
                         }
                         people.setCoordinate(moving(coordinate));
                         newPeopleList.add(people);
                     }
-                } else if (stateGrouping.getKey().equals(PeopleState.VERY_SICK.getState())) {
+                } else if (stateGrouping.getKey().equals(PeopleState.INFECTIOUS.getState())) {
                     for(People people: stateGrouping.getValue()) {
                         people.setCoordinate(moving(coordinate));
                         newPeopleList.add(people);
@@ -99,10 +99,10 @@ public class CalculationAlgorithm extends RecursiveTask<List<People>> {
             case (8) -> newCoordinate = new Coordinate(x, Math.abs(y - 1));
             case (9) -> newCoordinate = new Coordinate(x + 1, Math.abs(y - 1));
         }
-        if (newCoordinate.getCoordinateX() > SimulatorController.settingsAnimation.getMeshSizeY() - 1) {
+        if (newCoordinate.getCoordinateX() > SimulatorController.applicationSettings.getMesh().getSizeX() - 1) {
             newCoordinate.setCoordinateX(newCoordinate.getCoordinateX() - 1);
         }
-        if (newCoordinate.getCoordinateY() > SimulatorController.settingsAnimation.getMeshSizeY() - 1) {
+        if (newCoordinate.getCoordinateY() > SimulatorController.applicationSettings.getMesh().getSizeY() - 1) {
             newCoordinate.setCoordinateY(newCoordinate.getCoordinateY() - 1);
         }
         return newCoordinate;
