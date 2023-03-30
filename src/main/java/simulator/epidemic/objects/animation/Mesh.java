@@ -1,13 +1,21 @@
-package simulator.epidemic.objects;
+package simulator.epidemic.objects.animation;
+
+import javafx.scene.layout.GridPane;
 
 public class Mesh {
 
+    private final GridPane gridPane;
+
     private int sizeX;
+
     private int sizeY;
 
-    public Mesh(int sizeX, int sizeY) {
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+    public Mesh(GridPane gridPane) {
+        this.gridPane = gridPane;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
     }
 
     public int getSizeX() {
@@ -24,13 +32,5 @@ public class Mesh {
 
     public void setSizeY(int sizeY) {
         this.sizeY = sizeY;
-    }
-
-    @Override
-    public String toString() {
-        return "Mesh{" +
-                "sizeX=" + sizeX +
-                ", sizeY=" + sizeY +
-                '}';
     }
 }
